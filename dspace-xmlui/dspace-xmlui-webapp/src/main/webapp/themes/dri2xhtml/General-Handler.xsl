@@ -55,6 +55,9 @@
         <table class="ds-table file-list">
             <tr class="ds-table-header-row">
                 <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-file</i18n:text></th>
+                <!-- DATASHARE code start -->
+                <th><i18n:text>Description</i18n:text></th>
+                <!-- DATASHARE code end -->
                 <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-size</i18n:text></th>
                 <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-format</i18n:text></th>
                 <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-view</i18n:text></th>
@@ -111,6 +114,13 @@
                     </xsl:choose>
                 </a>
             </td>
+
+            <!-- DATASHARE code start -->
+            <td>
+              <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:label"/>
+            </td>
+            <!-- DATASHARE code end -->
+
             <!-- File size always comes in bytes and thus needs conversion --> 
             <td>
                 <xsl:choose>
@@ -146,6 +156,9 @@
               </xsl:call-template>
             </td>
             <td>
+                <!-- DATASHARE code start -->
+                <xsl:attribute name="class">download-cell</xsl:attribute>
+                <!-- DATASHARE code end -->
                 <xsl:choose>
                     <xsl:when test="$context/mets:fileSec/mets:fileGrp[@USE='THUMBNAIL']/
                         mets:file[@GROUPID=current()/@GROUPID]">
@@ -161,14 +174,28 @@
                             </img>
                         </a>
                     </xsl:when>
+                    <!-- DATASHARE code start -->
                     <xsl:otherwise>
+                      <a>
+                        <xsl:attribute name="href">
+                          <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                        </xsl:attribute>
+                        <img alt="Download">
+                          <xsl:attribute name="src">
+                            <xsl:text>/themes/DataShare/images/download_button.gif</xsl:text>
+                          </xsl:attribute>
+                        </img>
+                      </a>
+                    </xsl:otherwise>
+                    <!--<xsl:otherwise>
                         <a>
                             <xsl:attribute name="href">
                                 <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
                             </xsl:attribute>
                             <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-viewOpen</i18n:text>
                         </a>
-                    </xsl:otherwise>
+                    </xsl:otherwise>--> 
+                    <!-- DATASHARE code end -->
                 </xsl:choose>                        
             </td>
 	    <!-- Display the contents of 'Description' as long as at least one bitstream contains a description -->

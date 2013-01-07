@@ -1133,7 +1133,13 @@ public class DescribeStep extends AbstractSubmissionStep
                 // as twobox should be listed in a two column format. Since this
                 // decision is not something the Aspect can effect we merely place
                 // as a render hint.
-                Text text = form.addItem().addText(fieldName,"submit-text");
+               
+
+                /* DATASHARE code start */
+                //Text text = form.addItem().addText(fieldName,"submit-text");
+                //org.dspace.app.xmlui.wing.element.Item item = form.addItem();
+                //Text text = item.addText(fieldName,"submit-text");
+                /* DATASHARE code end */
 
                 // Setup the select field
                 text.setLabel(dcInput.getLabel());
@@ -1216,6 +1222,21 @@ public class DescribeStep extends AbstractSubmissionStep
                             }
                 }
         }
+
+                /* DATASHARE code start */
+                /*if(dcInput.getVocabulary() != null)
+                {
+                    // disable text field
+                    //text.setDisabled(true);
+                    
+                    // add link
+                    item.addXref(
+                                 "javascript:void(null)",
+                                 "javascript:popUpControlledVocab('" + fieldName + "','" + dcInput.getVocabulary() + "')",
+                                 "Subject Categories",
+                                 null);
+                }*/
+                /* DATASHARE code end */
         }
         
         

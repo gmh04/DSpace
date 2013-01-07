@@ -16,6 +16,7 @@ import java.util.HashMap;
 import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.util.HashUtil;
 import org.apache.excalibur.source.SourceValidity;
+import org.apache.log4j.Logger;
 import org.dspace.app.xmlui.cocoon.AbstractDSpaceTransformer;
 import org.dspace.app.xmlui.utils.DSpaceValidity;
 import org.dspace.app.xmlui.utils.HandleUtil;
@@ -24,15 +25,18 @@ import org.dspace.app.xmlui.wing.Message;
 import org.dspace.app.xmlui.wing.WingException;
 import org.dspace.app.xmlui.wing.element.Body;
 import org.dspace.app.xmlui.wing.element.Division;
-import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.app.xmlui.wing.element.List;
 import org.dspace.app.xmlui.wing.element.PageMeta;
+import org.dspace.app.xmlui.wing.element.Para;
+import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.authorize.AuthorizeException;
+import org.dspace.authorize.AuthorizeManager;
 import org.dspace.browse.BrowseException;
 import org.dspace.browse.BrowseIndex;
 import org.dspace.content.Collection;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.ConfigurationManager;
+import org.dspace.core.Constants;
 import org.xml.sax.SAXException;
 
 /**
@@ -262,6 +266,24 @@ public class CollectionViewer extends AbstractDSpaceTransformer implements Cache
                     ReferenceSet.TYPE_DETAIL_VIEW);
             mainInclude.addReference(collection);
         }
+        
+        // DATASHARE start
+        /*try
+        {
+            AuthorizeManager.authorizeAction(context, collection, Constants.ADD);
+            Division link = home.addDivision("upload-package");
+            Para para = link.addPara();
+            para.addXref(contextPath + "/handle/" + collection.getHandle() +
+                    "/submit-package", message("item.upload.upload-package"));
+            para.addContent(". Click ");
+            para.addXref("https://www.wiki.ed.ac.uk/display/datashare/mets_ingest", "here");
+            para.addContent(" for details.");
+        }
+        catch(AuthorizeException ex)
+        {
+            Logger.getLogger(CollectionViewer.class).info("** Not allowed **" + ex);
+        }*/
+        // DATASHARE end
 
     }
     

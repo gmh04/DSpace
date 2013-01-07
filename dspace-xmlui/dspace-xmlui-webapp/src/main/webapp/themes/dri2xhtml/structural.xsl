@@ -147,6 +147,14 @@
                 </xsl:if>
               </xsl:attribute>
             </meta>
+
+            <!-- DataShare start -->
+            <meta>
+              <xsl:attribute name="name">description</xsl:attribute>
+              <xsl:attribute name="content">Edinburgh DataShare is a digital repository of multi-disciplinary research datasets produced at the University of Edinburgh, hosted by the Data Library.</xsl:attribute>
+            </meta>
+            <!-- DataShare end -->
+
             <!-- Add stylsheets -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='stylesheet']">
                 <link rel="stylesheet" type="text/css">
@@ -175,6 +183,45 @@
                     </xsl:attribute>
                 </link>
             </xsl:for-each>
+
+            <!-- DATASHARE start -->
+            <link>
+              <xsl:attribute name="rel">
+                <xsl:text>shortcut icon</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="href">
+                <xsl:value-of select="$theme-path"/>
+                <xsl:text>/images/favicon.ico</xsl:text>
+              </xsl:attribute>
+            </link>
+            <script>
+              <xsl:attribute name="type">
+                <xsl:text>text/javascript</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="src">
+                <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
+                <xsl:text>/static/js/jquery.js</xsl:text>
+              </xsl:attribute>&#160;
+            </script>
+            <script>  
+              <xsl:attribute name="type">
+                <xsl:text>text/javascript</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="src">
+                <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
+                <xsl:text>/static/js/common.js</xsl:text>
+              </xsl:attribute>&#160;
+            </script>
+            <script>  
+              <xsl:attribute name="type">
+                <xsl:text>text/javascript</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="src">
+                <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
+                <xsl:text>/themes/DataShare/js/datashare.js</xsl:text>
+              </xsl:attribute>&#160;
+            </script>
+            <!-- DATASHARE end -->
             
             <!--  Add OpenSearch auto-discovery link -->
             <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='opensearch'][@qualifier='shortName']">
@@ -590,7 +637,17 @@
     -->
     <!-- TODO: figure out why i18n tags break the go button -->
     <xsl:template match="dri:options">
-        <div id="ds-options">
+
+        <div id="ds-options"> 
+
+          <!-- DATASHARE start -->
+          <div id="datashare-logo">
+            <a href="http://www.ed.ac.uk/schools-departments/information-services/services/research-support/data-library/data-repository">
+              <img alt="Edinburgh DataShare logo" src="/themes/DataShare/images/datashare_edinburgh.gif"/>
+            </a>
+          </div>
+          <!-- DATASHARE end -->
+
             <h3 id="ds-search-option-head" class="ds-option-set-head"><i18n:text>xmlui.dri2xhtml.structural.search</i18n:text></h3>
             <div id="ds-search-option" class="ds-option-set">
                 <!-- The form, complete with a text box and a button, all built from attributes referenced
@@ -1343,6 +1400,14 @@
                         </xsl:choose>
                     <xsl:apply-templates select="dri:field/dri:label" mode="formComposite"/>
                     <xsl:text>:</xsl:text>
+
+                    <!-- DATASHARE start -->
+                    <xsl:choose>
+                      <xsl:when test="./dri:field/@required = 'yes'">
+                        <span class="important-text"><xsl:text>*</xsl:text></span>
+                      </xsl:when>
+                    </xsl:choose>
+                    <!-- DATASHARE end -->
                 </label>
             </xsl:when>
             <xsl:when test="string-length(string(preceding-sibling::*[1][local-name()='label'])) > 0">

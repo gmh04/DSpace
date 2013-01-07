@@ -71,8 +71,13 @@ function doRegister()
         var errors = new Array();
         do {
             var email = cocoon.request.getParameter("email");
-        			
-            cocoon.sendPageAndWait("register/start",{"email" : email, "errors" : errors.join(','), "accountExists" : accountExists});
+
+            // DATASHARE code start
+            var uun = cocoon.request.getParameter("uun");
+            cocoon.sendPageAndWait("register/start",{"email" : email, "errors" : errors.join(','), "accountExists" : accountExists, "uun" : uun});
+            //cocoon.sendPageAndWait("register/start",{"email" : email, "errors" : errors.join(','), "accountExists" : accountExists});
+            // DATASHARE code end         
+
             var errors = new Array();
             accountExists = false;
             
@@ -105,8 +110,13 @@ function doRegister()
             {
                 try 
                 {
+                    // DATASHARE code start
+                    var uun = cocoon.request.getParameter("uun");
+                    org.edina.datashare.eperson.DataShareAccountManager.log(uun);
                     // May throw the AddressException or a varity of SMTP errors.
-                    AccountManager.sendRegistrationInfo(getDSContext(),email);
+                    //AccountManager.sendRegistrationInfo(getDSContext(),email);
+					org.edina.datashare.eperson.DataShareAccountManager.sendInfo(getDSContext(),email, uun);
+					// DATASHARE code end
                     getDSContext().commit();
                 } 
                 catch (error) 

@@ -188,12 +188,26 @@
                     <map:reader name="SitemapReader" src="org.dspace.app.xmlui.cocoon.SitemapReader"/>
                     <map:reader name="ConcatenationReader" src="org.dspace.app.xmlui.cocoon.ConcatenationReader"/>
                     <map:reader name="JQueryLoaderReader" src="org.dspace.app.xmlui.utils.JQueryLoaderReader"/>
+
+                    <!-- DATASHARE start -->
+                    <map:reader
+                        name="DownloadAllReader"
+                        src="org.edina.datashare.app.xmlui.aspect.datashare.DownloadAllBitstreams"/>
+                    <!-- DATASHARE end -->
+
                 </map:readers>
                 <map:actions>
                         <map:action name="locale" src="org.dspace.app.xmlui.cocoon.DSpaceLocaleAction"/>
                         <map:action name="StartAuthentication" src="org.dspace.app.xmlui.aspect.eperson.StartAuthenticationAction"/>
                         <map:action name="DSpacePropertyFileReader" src="org.dspace.app.xmlui.cocoon.DSpacePropertyFileReader" />
                         <map:action name="PropertyFileReader" src="org.dspace.app.xmlui.cocoon.PropertyFileReader" />
+                        
+                        <!-- DATASHARE start -->
+                        <map:action
+                           name="EmailException"
+                           src="org.edina.dspace.app.xmlui.aspect.general.EmailInternalError"/>
+                        <!-- DATASHARE end -->
+
                 </map:actions>
                 <map:pipes default="caching">
                         <map:pipe name="noncaching" src="org.apache.cocoon.components.pipeline.impl.NonCachingProcessingPipeline">
@@ -226,6 +240,18 @@
                         <map:parameter name="outputBufferSize" value="8192"/>
                         <map:parameter name="expires" value="now"/>
 
+                        <!-- DATASHARE start -->
+                        <!-- Unable to put this in own aspect as BitstreamReader is a cocoon
+                             reader which means processing ends after this pipeline-->
+
+                        <!-- download all option -->
+                        <map:match pattern="download/*/*/**">
+		                  <map:read type="DownloadAllReader">
+		                    <map:parameter name="handle" value="{1}/{2}"/>
+                            <map:parameter name="file_name" value="{3}"/>
+		                  </map:read>
+	                    </map:match>
+                        <!-- DATASHARE end -->                        
 
                         <!--
                                 Bitstreams for items that have a handle assigned. If the
