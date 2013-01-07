@@ -152,13 +152,16 @@ public class EmbargoManager
                             + result.toString());
         }
 
+        // datashare - dc.date.available is populated when
+        // item is created so ignore embragos in the past
         // sanity check: do not allow an embargo lift date in the past.
-        if (liftDate.before(new Date()))
-        {
-            throw new IllegalArgumentException(
-                    "Embargo lift date must be in the future, but this is in the past: "
-                            + result.toString());
-        }
+//        if (liftDate.before(new Date()))
+//        {
+//            throw new IllegalArgumentException(
+//                    "Embargo lift date must be in the future, but this is in the past: "
+//                            + result.toString());
+//        }
+        
         return result;
     }
 

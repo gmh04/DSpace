@@ -27,7 +27,10 @@ import org.dspace.app.xmlui.wing.element.Division;
 import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.app.xmlui.wing.element.List;
 import org.dspace.app.xmlui.wing.element.PageMeta;
+import org.dspace.app.xmlui.wing.element.Para;
+import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.authorize.AuthorizeException;
+import org.dspace.authorize.AuthorizeManager;
 import org.dspace.browse.BrowseException;
 import org.dspace.browse.BrowseIndex;
 import org.dspace.content.Collection;
@@ -262,6 +265,24 @@ public class CollectionViewer extends AbstractDSpaceTransformer implements Cache
                     ReferenceSet.TYPE_DETAIL_VIEW);
             mainInclude.addReference(collection);
         }
+        
+        // DATASHARE start
+        /*try
+        {
+            AuthorizeManager.authorizeAction(context, collection, Constants.ADD);
+            Division link = home.addDivision("upload-package");
+            Para para = link.addPara();
+            para.addXref(contextPath + "/handle/" + collection.getHandle() +
+                    "/submit-package", message("item.upload.upload-package"));
+            para.addContent(". Click ");
+            para.addXref("https://www.wiki.ed.ac.uk/display/datashare/mets_ingest", "here");
+            para.addContent(" for details.");
+        }
+        catch(AuthorizeException ex)
+        {
+            Logger.getLogger(CollectionViewer.class).info("** Not allowed **" + ex);
+        }*/
+        // DATASHARE end
 
     }
     

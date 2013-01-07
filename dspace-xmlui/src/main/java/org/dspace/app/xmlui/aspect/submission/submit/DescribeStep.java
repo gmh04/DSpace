@@ -1151,6 +1151,12 @@ public class DescribeStep extends AbstractSubmissionStep
             org.dspace.app.xmlui.wing.element.Item item = form.addItem();
             Text text = item.addText(fieldName, "submit-text");
 
+            /* DATASHARE code start */
+            //Text text = form.addItem().addText(fieldName,"submit-text");
+            //org.dspace.app.xmlui.wing.element.Item item = form.addItem();
+            //Text text = item.addText(fieldName,"submit-text");
+            /* DATASHARE code end */
+
             if(dcInput.getVocabulary() != null){
                 String vocabularyUrl = new DSpace().getConfigurationService().getProperty("dspace.url");
                 vocabularyUrl += "/JSON/controlled-vocabulary?vocabularyIdentifier=" + dcInput.getVocabulary();
