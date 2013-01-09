@@ -6,7 +6,8 @@
  * http://www.dspace.org/license/
  */
 (function($) {
-    $(document).ready(function(){
+    //$(document).ready(function(){
+    jQuery(document).ready(function($){
         //Find any controlled vocabulary urls this page might contain
         var vocabularyUrls = $('a[href^="vocabulary:"]');
         vocabularyUrls.click(function(index){

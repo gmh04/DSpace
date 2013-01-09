@@ -234,6 +234,7 @@
           <!-- javascript libraries and utils for choice/authority-control -->
           <map:match type="regexp" pattern="(^submit)|(^handle/.*/submit)|(^handle/.*/workflow)">
             <map:transform type="IncludePageMeta">
+              <!-- datashare - needed to add jquery-ui in specific order to get controlled vocabularies to work-->
               <map:parameter name="javascript.static#1" value="loadJQuery.js"/>
               <map:parameter name="javascript.static#2" value="themes/DataShare/js/jquery/jquery-ui-1.8.15.custom.min.js"/>
               <map:parameter name="javascript.static#3" value="static/js/vocabulary-support.js"/>
@@ -242,6 +243,7 @@
               <map:parameter name="javascript.static#6" value="static/js/scriptaculous/builder.js"/>
               <map:parameter name="javascript.static#7" value="static/js/scriptaculous/controls.js"/>
               <map:parameter name="javascript.static#8" value="static/js/choice-support.js"/>
+              <!-- datashare end -->
             </map:transform>
           </map:match>
 
