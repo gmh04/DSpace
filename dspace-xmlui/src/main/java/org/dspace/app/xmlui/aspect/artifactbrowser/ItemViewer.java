@@ -17,12 +17,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpEnvironment;
 import org.apache.cocoon.util.HashUtil;
 import org.apache.excalibur.source.SourceValidity;
+import org.dspace.app.sfx.SFXFileReader;
+import org.dspace.app.util.GoogleMetadata;
 import org.dspace.app.xmlui.cocoon.AbstractDSpaceTransformer;
 import org.dspace.app.xmlui.utils.DSpaceValidity;
 import org.dspace.app.xmlui.utils.HandleUtil;
@@ -31,24 +34,22 @@ import org.dspace.app.xmlui.wing.Message;
 import org.dspace.app.xmlui.wing.WingException;
 import org.dspace.app.xmlui.wing.element.Body;
 import org.dspace.app.xmlui.wing.element.Division;
-import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.app.xmlui.wing.element.PageMeta;
 import org.dspace.app.xmlui.wing.element.Para;
+import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
 import org.dspace.content.DCValue;
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
-import org.dspace.app.util.GoogleMetadata;
 import org.dspace.content.crosswalk.CrosswalkException;
 import org.dspace.content.crosswalk.DisseminationCrosswalk;
+import org.dspace.core.ConfigurationManager;
 import org.dspace.core.PluginManager;
 import org.jdom.Element;
 import org.jdom.Text;
 import org.jdom.output.XMLOutputter;
 import org.xml.sax.SAXException;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.app.sfx.SFXFileReader;
 
 /**
  * Display a single item.
@@ -278,6 +279,21 @@ public class ItemViewer extends AbstractDSpaceTransformer implements CacheablePr
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+
+        // DataShare - start
+        final String CLS = "download-all";
+        Division div = division.addDivision("download-all-top", CLS);
+
+        final String HREF = contextPath + "/download/" +
+            dso.getHandle() + "/" + dso.getName().replaceAll(" ", "_") + ".zip";
+        final String ICON = "go-down.png";
+        final String HINT = "Download zip file containing all files in the item";
+        
+        Para para = div.addPara();
+        para.addFigure(ICON, HREF, "");
+        para.addXref(HREF, message("item.view.download-all"), null, HINT);
+        para.addFigure(ICON, HREF, "");
+        // DataShare - end
 
         Para showfullPara = division.addPara(null, "item-view-toggle item-view-toggle-top");
 
