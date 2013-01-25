@@ -681,7 +681,7 @@
 
           <!-- DATASHARE start -->
           <div id="datashare-logo">
-            <a href="http://www.ed.ac.uk/schools-departments/information-services/services/research-support/data-library/data-repository">
+            <a href="/">
               <img alt="Edinburgh DataShare logo" src="/themes/DataShare/images/datashare_edinburgh.gif"/>
             </a>
           </div>
