@@ -46,6 +46,7 @@ import org.dspace.content.crosswalk.CrosswalkException;
 import org.dspace.content.crosswalk.DisseminationCrosswalk;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.PluginManager;
+import org.dspace.embargo.EmbargoManager;
 import org.jdom.Element;
 import org.jdom.Text;
 import org.jdom.output.XMLOutputter;
@@ -281,18 +282,20 @@ public class ItemViewer extends AbstractDSpaceTransformer implements CacheablePr
         }
 
         // DataShare - start
-        final String CLS = "download-all";
-        Division div = division.addDivision("download-all-top", CLS);
-
-        final String HREF = contextPath + "/download/" +
-            dso.getHandle() + "/" + dso.getName().replaceAll(" ", "_") + ".zip";
-        final String ICON = "go-down.png";
-        final String HINT = "Download zip file containing all files in the item";
-        
-        Para para = div.addPara();
-        para.addFigure(ICON, HREF, "");
-        para.addXref(HREF, message("item.view.download-all"), null, HINT);
-        para.addFigure(ICON, HREF, "");
+        if(EmbargoManager.getEmbargoTermsAsDate(context, item) == null){
+	        final String CLS = "download-all";
+	        Division div = division.addDivision("download-all-top", CLS);
+	
+	        final String HREF = contextPath + "/download/" +
+	            dso.getHandle() + "/" + dso.getName().replaceAll(" ", "_") + ".zip";
+	        final String ICON = "go-down.png";
+	        final String HINT = "Download zip file containing all files in the item";
+	        
+	        Para para = div.addPara();
+	        para.addFigure(ICON, HREF, "");
+	        para.addXref(HREF, message("item.view.download-all"), null, HINT);
+	        para.addFigure(ICON, HREF, "");
+        }
         // DataShare - end
 
         Para showfullPara = division.addPara(null, "item-view-toggle item-view-toggle-top");
