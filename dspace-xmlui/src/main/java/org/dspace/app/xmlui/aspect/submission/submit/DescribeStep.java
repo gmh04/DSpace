@@ -62,6 +62,12 @@ import org.xml.sax.SAXException;
  */
 public class DescribeStep extends AbstractSubmissionStep
 {	 
+	// DATASHARE code start 
+	public static final int INVALID_EMBARGO_STRING = 9025;
+	public static final int EMBARGO_IN_THE_PAST = 9026;
+	public static final int EMBARGO_TOO_FAR_IN_FUTURE = 9027;
+	// DATASHARE code end
+	
         /** Language Strings **/
     protected static final Message T_head =
         message("xmlui.Submission.submit.DescribeStep.head");
@@ -1148,18 +1154,6 @@ public class DescribeStep extends AbstractSubmissionStep
                 // as a render hint.
             org.dspace.app.xmlui.wing.element.Item item = form.addItem();
             Text text = item.addText(fieldName, "submit-text");
-
-            if(dcInput.getVocabulary() != null){
-            	/* DATASHARE code start */
-                //String vocabularyUrl = new DSpace().getConfigurationService().getProperty("dspace.url");
-                //vocabularyUrl += "/JSON/controlled-vocabulary?vocabularyIdentifier=" + dcInput.getVocabulary();
-                //Also hand down the field name so our summoning script knows the field the selected value is to end up in
-                //vocabularyUrl += "&metadataFieldName=" + fieldName;
-                
-                //  
-                //item.addXref("vocabulary:" + vocabularyUrl).addContent(T_vocabulary_link);
-            	/* DATASHARE code end */
-            }
             
                 // Setup the select field
                 text.setLabel(dcInput.getLabel());
@@ -1246,15 +1240,15 @@ public class DescribeStep extends AbstractSubmissionStep
             /* DATASHARE code start */
             if(fieldName.equals("dc_date_copyright")){            	
        	 		switch(this.errorFlag){
-       	 			case 9025:{
+       	 			case INVALID_EMBARGO_STRING:{
        	 				text.addError(message("embargo.control.invalid"));
        	 				break;
        	 			}
-       	 			case 9026:{
+       	 			case EMBARGO_IN_THE_PAST:{
        	 				text.addError(message("embargo.control.past"));
        	 				break;
        	 			}
-	                case 9027:
+	                case EMBARGO_TOO_FAR_IN_FUTURE:
 	                {
 	                	text.addError(message("embargo.control.future"));
 	                    break;
