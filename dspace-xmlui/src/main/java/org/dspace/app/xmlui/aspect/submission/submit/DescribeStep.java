@@ -18,9 +18,9 @@ import org.dspace.app.util.DCInput;
 import org.dspace.app.util.DCInputSet;
 import org.dspace.app.util.DCInputsReader;
 import org.dspace.app.util.DCInputsReaderException;
-import org.dspace.app.xmlui.utils.UIException;
 import org.dspace.app.xmlui.aspect.submission.AbstractSubmissionStep;
 import org.dspace.app.xmlui.aspect.submission.FlowUtils;
+import org.dspace.app.xmlui.utils.UIException;
 import org.dspace.app.xmlui.wing.Message;
 import org.dspace.app.xmlui.wing.WingException;
 import org.dspace.app.xmlui.wing.element.Body;
@@ -43,12 +43,10 @@ import org.dspace.content.DCPersonName;
 import org.dspace.content.DCSeriesNumber;
 import org.dspace.content.DCValue;
 import org.dspace.content.Item;
-import org.dspace.content.authority.MetadataAuthorityManager;
-import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.content.authority.Choice;
+import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.content.authority.Choices;
-
-import org.dspace.utils.DSpace;
+import org.dspace.content.authority.MetadataAuthorityManager;
 import org.xml.sax.SAXException;
 
 /**
@@ -63,7 +61,7 @@ import org.xml.sax.SAXException;
  * @author Tim Donohue (updated for Configurable Submission)
  */
 public class DescribeStep extends AbstractSubmissionStep
-{
+{	 
         /** Language Strings **/
     protected static final Message T_head =
         message("xmlui.Submission.submit.DescribeStep.head");
@@ -1244,6 +1242,26 @@ public class DescribeStep extends AbstractSubmissionStep
                             }
                 }
             }
+            
+            /* DATASHARE code start */
+            if(fieldName.equals("dc_date_copyright")){            	
+       	 		switch(this.errorFlag){
+       	 			case 9025:{
+       	 				text.addError(message("embargo.control.invalid"));
+       	 				break;
+       	 			}
+       	 			case 9026:{
+       	 				text.addError(message("embargo.control.past"));
+       	 				break;
+       	 			}
+	                case 9027:
+	                {
+	                	text.addError(message("embargo.control.future"));
+	                    break;
+	       	 		}
+       	 		}
+            }
+            /* DATASHARE code end */
         }
 
 
