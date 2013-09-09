@@ -243,6 +243,7 @@
               <map:parameter name="javascript.static#6" value="static/js/scriptaculous/builder.js"/>
               <map:parameter name="javascript.static#7" value="static/js/scriptaculous/controls.js"/>
               <map:parameter name="javascript.static#8" value="static/js/choice-support.js"/>
+              <map:parameter name="javascript.static#9" value="themes/DataShare/js/datashare.js"/>
               <!-- datashare end -->
             </map:transform>
           </map:match>
