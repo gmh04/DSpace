@@ -13,9 +13,9 @@
     Description: This stylesheet contains templates to perform tasks associated with metadata visualization
         that are common to all handlers. This includes things like bitstream display and thumbnails.
     Version: Manakin-1.1 and up (basically, those version making use of the Virtual Object Store)
--->    
+-->
 
-<xsl:stylesheet 
+<xsl:stylesheet
     xmlns:dri="http://di.tamu.edu/DRI/1.0/"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:mets="http://www.loc.gov/METS/"
@@ -25,12 +25,12 @@
     xmlns:jstring="java.lang.String"
     xmlns:rights="http://cosimo.stanford.edu/sdr/metsrights/"
     exclude-result-prefixes="i18n dri mets xlink xsl jstring rights">
-    
-    <xsl:output indent="yes"/>
-    
 
-    
-    
+    <xsl:output indent="yes"/>
+
+
+
+
     <!-- Generate the thunbnail, if present, from the file section -->
     <xsl:template match="mets:fileSec" mode="artifact-preview">
         <xsl:if test="mets:fileGrp[@USE='THUMBNAIL']">
@@ -45,14 +45,14 @@
             </div>
         </xsl:if>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- Generate the bitstream information from the file section -->
     <xsl:template match="mets:fileGrp[@USE='CONTENT']">
         <xsl:param name="context"/>
         <xsl:param name="primaryBitstream" select="-1"/>
-        
+
         <h2><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text></h2>
         <table class="ds-table file-list">
             <tr class="ds-table-header-row">
@@ -80,9 +80,9 @@
                 </xsl:otherwise>
             </xsl:choose>
         </table>
-    </xsl:template>   
-    
-    
+    </xsl:template>
+
+
     <!-- Build a single row in the bitstreams table of the item view page -->
     <xsl:template match="mets:file">
         <xsl:param name="context" select="."/>
@@ -113,7 +113,8 @@
                     </xsl:choose>
                 </a>
             </td>
-            <!-- File size always comes in bytes and thus needs conversion --> 
+
+            <!-- File size always comes in bytes and thus needs conversion -->
             <td>
                 <xsl:choose>
                     <xsl:when test="@SIZE &lt; 1024">
@@ -148,6 +149,9 @@
               </xsl:call-template>
             </td>
             <td>
+                <!-- DATASHARE code start -->
+                <xsl:attribute name="class">download-cell</xsl:attribute>
+                <!-- DATASHARE code end -->
                 <xsl:choose>
                     <xsl:when test="$context/mets:fileSec/mets:fileGrp[@USE='THUMBNAIL']/
                         mets:file[@GROUPID=current()/@GROUPID]">
@@ -163,17 +167,29 @@
                             </img>
                         </a>
                     </xsl:when>
+                    <!-- DATASHARE code start -->
                     <xsl:otherwise>
-                        <xsl:choose>
-                            <xsl:when test="@ADMID">
-                                <xsl:call-template name="display-rights"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:call-template name="view-open"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                      <a>
+                        <xsl:attribute name="href">
+                          <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                        </xsl:attribute>
+                        <img alt="Download">
+                          <xsl:attribute name="src">
+                            <xsl:text>/themes/DataShare/images/download_button.gif</xsl:text>
+                          </xsl:attribute>
+                        </img>
+                      </a>
                     </xsl:otherwise>
-                </xsl:choose>                        
+                    <!--<xsl:otherwise>
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                            </xsl:attribute>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-viewOpen</i18n:text>
+                        </a>
+                    </xsl:otherwise>-->
+                    <!-- DATASHARE code end -->
+                </xsl:choose>
             </td>
 	    <!-- Display the contents of 'Description' as long as at least one bitstream contains a description -->
 	    <xsl:if test="$context/mets:fileSec/mets:fileGrp[@USE='CONTENT']/mets:file/mets:FLocat/@xlink:label != ''">
@@ -184,7 +200,7 @@
 
         </tr>
     </xsl:template>
-    
+
     <xsl:template name="view-open">
         <a>
             <xsl:attribute name="href">
@@ -233,7 +249,7 @@
     This maps format MIME Types to human friendly File Type descriptions.
     Essentially, it looks for a corresponding 'key' in your messages.xml of this
     format: xmlui.dri2xhtml.mimetype.{MIME Type}
-    
+
     (e.g.) <message key="xmlui.dri2xhtml.mimetype.application/pdf">PDF</message>
 
     If a key is found, the translated value is displayed as the File Type (e.g. PDF)
@@ -264,9 +280,9 @@
             </ul>
         </div>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- Generate the logo, if present, from the file section -->
     <xsl:template match="mets:fileGrp[@USE='LOGO']">
         <div class="ds-logo-wrapper">
@@ -276,6 +292,6 @@
             </img>
         </div>
     </xsl:template>
-    
-    
+
+
 </xsl:stylesheet>

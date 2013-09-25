@@ -18,9 +18,9 @@ import org.dspace.app.util.DCInput;
 import org.dspace.app.util.DCInputSet;
 import org.dspace.app.util.DCInputsReader;
 import org.dspace.app.util.DCInputsReaderException;
-import org.dspace.app.xmlui.utils.UIException;
 import org.dspace.app.xmlui.aspect.submission.AbstractSubmissionStep;
 import org.dspace.app.xmlui.aspect.submission.FlowUtils;
+import org.dspace.app.xmlui.utils.UIException;
 import org.dspace.app.xmlui.wing.Message;
 import org.dspace.app.xmlui.wing.WingException;
 import org.dspace.app.xmlui.wing.element.Body;
@@ -63,7 +63,13 @@ import org.xml.sax.SAXException;
  * @author Tim Donohue (updated for Configurable Submission)
  */
 public class DescribeStep extends AbstractSubmissionStep
-{
+{	 
+	// DATASHARE code start 
+	public static final int INVALID_EMBARGO_STRING = 9025;
+	public static final int EMBARGO_IN_THE_PAST = 9026;
+	public static final int EMBARGO_TOO_FAR_IN_FUTURE = 9027;
+	// DATASHARE code end
+	
         /** Language Strings **/
     protected static final Message T_head =
         message("xmlui.Submission.submit.DescribeStep.head");
@@ -1240,6 +1246,26 @@ public class DescribeStep extends AbstractSubmissionStep
                             }
                 }
             }
+            
+            /* DATASHARE code start */
+            if(fieldName.equals("dc_date_copyright")){            	
+       	 		switch(this.errorFlag){
+       	 			case INVALID_EMBARGO_STRING:{
+       	 				text.addError(message("embargo.control.invalid"));
+       	 				break;
+       	 			}
+       	 			case EMBARGO_IN_THE_PAST:{
+       	 				text.addError(message("embargo.control.past"));
+       	 				break;
+       	 			}
+	                case EMBARGO_TOO_FAR_IN_FUTURE:
+	                {
+	                	text.addError(message("embargo.control.future"));
+	                    break;
+	       	 		}
+       	 		}
+            }
+            /* DATASHARE code end */
         }
 
 

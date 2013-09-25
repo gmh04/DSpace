@@ -25,3 +25,6 @@ META-INF/
 ## Ignore all *.properties file in root folder, EXCEPT build.properties (the default)
 /*.properties
 !/build.properties
+
+dspace-xmlui/src/main/resources/aspects/DataShare
+dspace-xmlui/src/main/webapp/themes/DataShare
