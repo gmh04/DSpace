@@ -205,14 +205,16 @@ public class EditItemBitstreamsForm extends AbstractDSpaceTransformer {
                     if((bitstreamIndex == 0)){
                         upButton.setDisabled();
                     }
+                    
                     upButton.setValue(T_order_up);
-                    upButton.setHelp(T_order_up);
+                    // problem with button label
+                    //upButton.setHelp(T_order_up);
                     Button downButton = cell.addButton("submit_order_" + bundle.getID() + "_" + bitstream.getID() + "_down", (bitstreamIndex == (bitstreams.length - 1) ? "disabled" : "") + " icon-button arrowDown ");
                     if(bitstreamIndex == (bitstreams.length - 1)){
                         downButton.setDisabled();
                     }
                     downButton.setValue(T_order_down);
-                    downButton.setHelp(T_order_down);
+                    //downButton.setHelp(T_order_down);
 
                     //These values will only be used IF javascript is disabled or isn't working
                     cell.addHidden(bundle.getID() + "_" + bitstream.getID() + "_up_value").setValue(retrieveOrderUpButtonValue((java.util.List<Integer>) bitstreamIdOrder.clone(), bitstreamIndex));
