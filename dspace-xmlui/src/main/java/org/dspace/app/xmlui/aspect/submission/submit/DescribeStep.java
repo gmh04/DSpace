@@ -47,7 +47,7 @@ import org.dspace.content.authority.MetadataAuthorityManager;
 import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.content.authority.Choice;
 import org.dspace.content.authority.Choices;
-
+import org.dspace.core.ConfigurationManager;
 import org.dspace.utils.DSpace;
 import org.xml.sax.SAXException;
 
@@ -1248,7 +1248,7 @@ public class DescribeStep extends AbstractSubmissionStep
             }
             
             /* DATASHARE code start */
-            if(fieldName.equals("dc_date_copyright")){            	
+            if(fieldName.equals(ConfigurationManager.getProperty("embargo.field.terms").replaceAll("\\.", "_"))){
        	 		switch(this.errorFlag){
        	 			case INVALID_EMBARGO_STRING:{
        	 				text.addError(message("embargo.control.invalid"));

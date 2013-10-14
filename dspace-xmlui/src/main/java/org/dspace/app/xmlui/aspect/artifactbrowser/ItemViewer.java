@@ -39,6 +39,7 @@ import org.dspace.app.xmlui.wing.element.Para;
 import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
+import org.dspace.content.DCDate;
 import org.dspace.content.DCValue;
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
@@ -282,7 +283,8 @@ public class ItemViewer extends AbstractDSpaceTransformer implements CacheablePr
         }
 
         // DataShare - start
-        if(EmbargoManager.getEmbargoTermsAsDate(context, item) == null){
+        DCValue embargo[] = item.getMetadata(ConfigurationManager.getProperty("embargo.field.lift"));
+        if(embargo == null || embargo.length == 0){
 	        final String CLS = "download-all";
 	        Division div = division.addDivision("download-all-top", CLS);
 	
