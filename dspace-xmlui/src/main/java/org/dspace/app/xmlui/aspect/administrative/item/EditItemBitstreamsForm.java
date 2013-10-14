@@ -129,7 +129,7 @@ public class EditItemBitstreamsForm extends AbstractDSpaceTransformer {
 		for (Bundle bundle : bundles)
 		{
 
-			Cell bundleCell = files.addRow("bundle_head_" + bundle.getID(), Row.ROLE_DATA, "").addCell(1, 5);
+			Cell bundleCell = files.addRow("bundle_head_" + bundle.getID(), Row.ROLE_DATA, "").addCell(1, 7);
 			bundleCell.addContent(T_bundle_label.parameterize(bundle.getName()));
 
 			Bitstream[] bitstreams = bundle.getBitstreams();
@@ -227,7 +227,7 @@ public class EditItemBitstreamsForm extends AbstractDSpaceTransformer {
 
 		if (AuthorizeManager.authorizeActionBoolean(context, item, Constants.ADD))
 		{
-			Cell cell = files.addRow().addCell(1, 5);
+			Cell cell = files.addRow().addCell(1, 7);
 			cell.addXref(contextPath+"/admin/item?administrative-continue="+knot.getId()+"&submit_add",T_submit_add);
 		}
 		else
