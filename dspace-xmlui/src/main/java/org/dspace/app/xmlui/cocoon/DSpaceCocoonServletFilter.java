@@ -224,6 +224,13 @@ public class DSpaceCocoonServletFilter implements Filter
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain arg2) throws IOException, ServletException { 
     
+	        // DATASHARE - start
+	        if(response.isCommitted()){
+	            // EASE filter can redirect and thus commit the response
+	            return;
+	        }
+	        // DATASHARE - start
+	        
             HttpServletRequest realRequest = (HttpServletRequest)request;
             HttpServletResponse realResponse = (HttpServletResponse) response;
 
@@ -264,11 +271,6 @@ public class DSpaceCocoonServletFilter implements Filter
 	                                : ("?" + realRequest.getQueryString()));
 	                realResponse.sendRedirect(location.toString());
 	        }
-                // DATASHARE - start
-                else if(uri.equals("/ease-login")){
-                    // prevent runtime exception for ease login
-                }
-                // DATASHARE - end
                 else
                 {   // invoke the next filter
                     arg2.doFilter(realRequest, realResponse);
