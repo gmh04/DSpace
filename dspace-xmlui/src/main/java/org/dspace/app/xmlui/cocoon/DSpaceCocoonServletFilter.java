@@ -264,6 +264,11 @@ public class DSpaceCocoonServletFilter implements Filter
 	                                : ("?" + realRequest.getQueryString()));
 	                realResponse.sendRedirect(location.toString());
 	        }
+                // Datashare -start
+                else if(uri.equals("/ease-login")){
+                    // prevent runtime exception for ease login
+                }
+                // Datashare -end
                 else
                 {   // invoke the next filter
                     arg2.doFilter(realRequest, realResponse);
