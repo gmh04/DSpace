@@ -519,8 +519,12 @@ public class Util {
             throw new RuntimeException(ex);
         }
         
-        long limit = Long.parseLong(ConfigurationManager.getProperty(
-                "dspace.downloadall.limit", "3000000000"));
+        long limit = 2147483647;
+        String limitStr = ConfigurationManager.getProperty("dspace.downloadall.limit");
+        if(limitStr != null){
+            limit = Long.parseLong(limitStr);
+        }
+        
         return downloadSize > limit;
     }
     
