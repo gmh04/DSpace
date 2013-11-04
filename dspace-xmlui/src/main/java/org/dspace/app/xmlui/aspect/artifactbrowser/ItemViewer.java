@@ -26,6 +26,7 @@ import org.apache.cocoon.util.HashUtil;
 import org.apache.excalibur.source.SourceValidity;
 import org.dspace.app.sfx.SFXFileReader;
 import org.dspace.app.util.GoogleMetadata;
+import org.dspace.app.util.Util;
 import org.dspace.app.xmlui.cocoon.AbstractDSpaceTransformer;
 import org.dspace.app.xmlui.utils.DSpaceValidity;
 import org.dspace.app.xmlui.utils.HandleUtil;
@@ -39,7 +40,6 @@ import org.dspace.app.xmlui.wing.element.Para;
 import org.dspace.app.xmlui.wing.element.ReferenceSet;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
-import org.dspace.content.DCDate;
 import org.dspace.content.DCValue;
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
@@ -47,7 +47,6 @@ import org.dspace.content.crosswalk.CrosswalkException;
 import org.dspace.content.crosswalk.DisseminationCrosswalk;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.PluginManager;
-import org.dspace.embargo.EmbargoManager;
 import org.jdom.Element;
 import org.jdom.Text;
 import org.jdom.output.XMLOutputter;
@@ -283,8 +282,8 @@ public class ItemViewer extends AbstractDSpaceTransformer implements CacheablePr
         }
 
         // DataShare - start
-        DCValue embargo[] = item.getMetadata(ConfigurationManager.getProperty("embargo.field.lift"));
-        if(embargo == null || embargo.length == 0){
+        if(Util.showDownloadAll(context, item))
+        {
 	        final String CLS = "download-all";
 	        Division div = division.addDivision("download-all-top", CLS);
 	

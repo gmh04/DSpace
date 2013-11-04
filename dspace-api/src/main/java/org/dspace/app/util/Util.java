@@ -21,10 +21,14 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.dspace.content.Bitstream;
+import org.dspace.content.Bundle;
 import org.dspace.content.Collection;
 import org.dspace.content.DCValue;
 import org.dspace.content.Item;
+import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Constants;
+import org.dspace.core.Context;
 import org.dspace.core.I18nUtil;
 
 
@@ -466,4 +470,71 @@ public class Util {
 
         return toReturn;
     }
+    
+    // DATASHARE - start
+    /**
+     * Does the item have an embargo?
+     * @param context DSpace context.
+     * @param item DSpace item.
+     * @return True if the dspace item is embargoed.
+     */
+    @SuppressWarnings("deprecation")
+    public static boolean hasEmbargo(Context context, Item item)
+    {
+        boolean hasEmbargo = true;
+        
+        DCValue embargo[] = item.getMetadata(ConfigurationManager.getProperty("embargo.field.lift"));
+        if(embargo == null || embargo.length == 0){
+            hasEmbargo = false;
+        }
+        
+        log.debug(item.getID() + " hasEmbargo: " + hasEmbargo);
+        
+        return hasEmbargo;
+    }
+    
+    /**
+     * Does the total size of bitstreams lead to a large download? 
+     * @param item
+     * @return
+     */
+    public static boolean isLargeDownload(Item item)
+    {
+        long downloadSize = 0;
+        
+        try
+        {
+            Bundle bundles[] = item.getBundles("ORIGINAL");
+            for(int i = 0; i < bundles.length; i++)
+            {
+                Bitstream[] files = bundles[i].getBitstreams();
+                for(int j = 0; j < files.length; j++)
+                {
+                    downloadSize += files[j].getSize();
+                }
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw new RuntimeException(ex);
+        }
+        
+        long limit = Long.parseLong(ConfigurationManager.getProperty(
+                "dspace.downloadall.limit", "3000000000"));
+        return downloadSize > limit;
+    }
+    
+    /**
+     * Should download all option be shown? Download all link will not be
+     * visible if the item has an embargo or if the total download is greater
+     * than dspace.downloadall.limit 
+     * @param context
+     * @param item
+     * @return
+     */
+    public static boolean showDownloadAll(Context context, Item item)
+    {
+        return(!hasEmbargo(context, item) && !isLargeDownload(item));
+    }
+    // DATASHARE - end
 }
