@@ -27,6 +27,8 @@
         <!-- 'root.basedir' is the path to the root [dspace-src] dir. It must be redefined by each child POM,
              as it is used to reference the LICENSE_HEADER and *.properties file(s) in that directory. -->
         <root.basedir>${basedir}</root.basedir>
+
+        <datashare.version>3.2.0.0-SNAPSHOT</datashare.version>
     </properties>
 
     <build>
@@ -172,6 +174,7 @@
          </plugin>
       </plugins>
    </build>
+
    
    <profiles>
 
@@ -445,7 +448,7 @@
          <dependency>
             <groupId>org.dspace</groupId>
             <artifactId>dspace-api</artifactId>
-            <version>3.2</version>
+            <version>${datashare.version}</version>
          </dependency>
          <dependency>
             <groupId>org.dspace.modules</groupId>
@@ -527,7 +530,7 @@
          <dependency>
             <groupId>org.dspace</groupId>
             <artifactId>dspace-xmlui</artifactId>
-            <version>3.2</version>
+            <version>${datashare.version}</version>
             <type>jar</type>
             <classifier>classes</classifier>
          </dependency>
@@ -1200,5 +1203,5 @@
             <url>http://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
     </repositories>
-    
+
 </project>
