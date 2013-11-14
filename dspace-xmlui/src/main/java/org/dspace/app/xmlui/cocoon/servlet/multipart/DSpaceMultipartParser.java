@@ -10,9 +10,11 @@ package org.dspace.app.xmlui.cocoon.servlet.multipart;
 import org.apache.cocoon.servlet.multipart.*;
 import org.apache.cocoon.util.NullOutputStream;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import java.io.*;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -388,6 +390,12 @@ public class DSpaceMultipartParser {
                     hdrline = "";
                 }
 
+                // DATASHARE start problem with htmlunit tests
+                if(name.equals("charset") && value == null){
+                	value = "UTF-8";
+                }
+                // DATASHARE end
+                
                 headers.put(name, value);
             }
 

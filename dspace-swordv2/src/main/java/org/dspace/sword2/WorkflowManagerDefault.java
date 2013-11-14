@@ -7,6 +7,7 @@
  */
 package org.dspace.sword2;
 
+import org.apache.commons.logging.Log;
 import org.dspace.content.Bitstream;
 import org.dspace.content.Bundle;
 import org.dspace.content.Collection;
@@ -15,6 +16,8 @@ import org.dspace.core.Context;
 import org.swordapp.server.Deposit;
 import org.swordapp.server.SwordError;
 import org.swordapp.server.UriRegistry;
+
+import common.Logger;
 
 import java.sql.SQLException;
 
@@ -249,7 +252,10 @@ public class WorkflowManagerDefault implements WorkflowManager
         if (deposit.isInProgress() && inarch)
         {
             verboseDescription.append("The deposit is not finished, but the item is already in the archive");
-            throw new DSpaceSwordException("Invalid workflow state");
+
+			// DATASHARE - start
+            //throw new DSpaceSwordException("Invalid workflow state");
+			// DATASHARE - end
         }
 
         if (deposit.isInProgress() && inwf)
