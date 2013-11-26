@@ -161,7 +161,7 @@ public class SimpleDCEntryIngester implements SwordEntryIngester
 			DCValue dcv = this.makeDCValue(dsTerm, null);
 			if (dcv.qualifier == null)
 			{
-				item.clearMetadata(dcv.schema, dcv.element, Item.ANY, Item.ANY);
+				item.clearMetadata(dcv.schema, dcv.element, null, Item.ANY);
 			}
 			else
 			{
