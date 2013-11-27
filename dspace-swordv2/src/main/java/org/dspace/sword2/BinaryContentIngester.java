@@ -7,6 +7,9 @@
  */
 package org.dspace.sword2;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Bitstream;
 import org.dspace.content.BitstreamFormat;
@@ -20,11 +23,6 @@ import org.swordapp.server.Deposit;
 import org.swordapp.server.SwordAuthException;
 import org.swordapp.server.SwordError;
 import org.swordapp.server.SwordServerException;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 public class BinaryContentIngester extends AbstractSwordContentIngester
 {
@@ -145,7 +143,9 @@ public class BinaryContentIngester extends AbstractSwordContentIngester
 				original = item.createBundle("ORIGINAL");
 			}
 
-			Bitstream bs = item.createSingleBitstream(deposit.getInputStream());
+			Bitstream bs = original.createBitstream(deposit.getInputStream());
+            BitstreamFormat format = this.getFormat(context, deposit.getFilename());
+            bs.setFormat(format);
 			bs.setName(deposit.getFilename());
 			bs.update();
 
@@ -167,7 +167,6 @@ public class BinaryContentIngester extends AbstractSwordContentIngester
 			result.setItem(item);
 			result.setTreatment(this.getTreatment());
             result.setOriginalDeposit(bs);
-
 			return result;
 		}
 		catch (AuthorizeException e)
