@@ -28,7 +28,7 @@
              as it is used to reference the LICENSE_HEADER and *.properties file(s) in that directory. -->
         <root.basedir>${basedir}</root.basedir>
 
-        <datashare.version>3.2.0.0</datashare.version>
+        <datashare.version>3.2.0.1-SNAPSHOT</datashare.version>
     </properties>
 
     <build>
