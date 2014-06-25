@@ -21,7 +21,7 @@
         <root.basedir>${basedir}/..</root.basedir>
     </properties>
 
-    <version>3.2.0.1-SNAPSHOT</version>
+    <version>3.2.0.1</version>
 
     <!--
        Runtime and Compile Time dependencies for DSpace.
