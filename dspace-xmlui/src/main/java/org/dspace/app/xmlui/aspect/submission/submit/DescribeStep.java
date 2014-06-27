@@ -47,7 +47,7 @@ import org.dspace.content.authority.MetadataAuthorityManager;
 import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.content.authority.Choice;
 import org.dspace.content.authority.Choices;
-
+import org.dspace.core.ConfigurationManager;
 import org.dspace.utils.DSpace;
 import org.xml.sax.SAXException;
 
@@ -63,7 +63,13 @@ import org.xml.sax.SAXException;
  * @author Tim Donohue (updated for Configurable Submission)
  */
 public class DescribeStep extends AbstractSubmissionStep
-{
+{	 
+	// DATASHARE code start 
+	public static final int INVALID_EMBARGO_STRING = 9025;
+	public static final int EMBARGO_IN_THE_PAST = 9026;
+	public static final int EMBARGO_TOO_FAR_IN_FUTURE = 9027;
+	// DATASHARE code end
+	
         /** Language Strings **/
     protected static final Message T_head =
         message("xmlui.Submission.submit.DescribeStep.head");
@@ -1240,6 +1246,26 @@ public class DescribeStep extends AbstractSubmissionStep
                             }
                 }
             }
+            
+            /* DATASHARE code start */
+            if(fieldName.equals(ConfigurationManager.getProperty("embargo.field.terms").replaceAll("\\.", "_"))){
+       	 		switch(this.errorFlag){
+       	 			case INVALID_EMBARGO_STRING:{
+       	 				text.addError(message("embargo.control.invalid"));
+       	 				break;
+       	 			}
+       	 			case EMBARGO_IN_THE_PAST:{
+       	 				text.addError(message("embargo.control.past"));
+       	 				break;
+       	 			}
+	                case EMBARGO_TOO_FAR_IN_FUTURE:
+	                {
+	                	text.addError(message("embargo.control.future"));
+	                    break;
+	       	 		}
+       	 		}
+            }
+            /* DATASHARE code end */
         }
 
 

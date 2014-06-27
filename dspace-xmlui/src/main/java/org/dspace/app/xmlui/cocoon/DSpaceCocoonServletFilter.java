@@ -225,6 +225,13 @@ public class DSpaceCocoonServletFilter implements Filter
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain arg2) throws IOException, ServletException { 
     
+	        // DATASHARE - start
+	        if(response.isCommitted()){
+	            // EASE filter can redirect and thus commit the response
+	            return;
+	        }
+	        // DATASHARE - start
+	        
             HttpServletRequest realRequest = (HttpServletRequest)request;
             HttpServletResponse realResponse = (HttpServletResponse) response;
 
@@ -274,6 +281,7 @@ public class DSpaceCocoonServletFilter implements Filter
                 {   // invoke the next filter
                     arg2.doFilter(realRequest, realResponse);
                 }
+
     } catch (IOException e) {
         ContextUtil.abortContext(realRequest);
         if (LOG.isDebugEnabled()) {

@@ -134,40 +134,45 @@ public class EditCollectionMetadataForm extends AbstractDSpaceTransformer
         {
             introductory_text.addError(introductory_text_error);
         }
-	    
+
+
+        // DATASHARE start (see https://redmine.edina.ac.uk/issues/7265)
+
 	    // copyright text
-	    metadataList.addLabel(T_label_copyright_text);
-	    TextArea copyright_text = metadataList.addItem().addTextArea("copyright_text");
-	    copyright_text.setValue(thisCollection.getMetadata("copyright_text"));
-	    copyright_text.setSize(6, 40);
-	    if (copyright_text_error != null)
-        {
-            copyright_text.addError(copyright_text_error);
-        }
-	    
-	    // legacy sidebar text; may or may not be used for news 
-	    metadataList.addLabel(T_label_side_bar_text);
-	    TextArea side_bar_text = metadataList.addItem().addTextArea("side_bar_text");
-	    side_bar_text.setValue(thisCollection.getMetadata("side_bar_text"));
-	    side_bar_text.setSize(6, 40);
-	    if (side_bar_text_error != null)
-        {
-            side_bar_text.addError(side_bar_text_error);
-        }
-	    
+	    // metadataList.addLabel(T_label_copyright_text);
+	    // TextArea copyright_text = metadataList.addItem().addTextArea("copyright_text");
+	    // copyright_text.setValue(thisCollection.getMetadata("copyright_text"));
+	    // copyright_text.setSize(6, 40);
+	    // if (copyright_text_error != null)
+        // {
+        //     copyright_text.addError(copyright_text_error);
+        // }
+
+	    // legacy sidebar text; may or may not be used for news
+	    // metadataList.addLabel(T_label_side_bar_text);
+	    // TextArea side_bar_text = metadataList.addItem().addTextArea("side_bar_text");
+	    // side_bar_text.setValue(thisCollection.getMetadata("side_bar_text"));
+	    // side_bar_text.setSize(6, 40);
+	    // if (side_bar_text_error != null)
+        // {
+        //     side_bar_text.addError(side_bar_text_error);
+        // }
+
 	    // license text
-	    metadataList.addLabel(T_label_license);
-	    TextArea license = metadataList.addItem().addTextArea("license");
-	    license.setValue(thisCollection.getMetadata("license"));
-	    license.setSize(6, 40);
-	    
+	    // metadataList.addLabel(T_label_license);
+	    // TextArea license = metadataList.addItem().addTextArea("license");
+	    // license.setValue(thisCollection.getMetadata("license"));
+	    // license.setSize(6, 40);
+
 	    // provenance description
-	    metadataList.addLabel(T_label_provenance_description);
-	    TextArea provenance_description = metadataList.addItem().addTextArea("provenance_description");
-	    provenance_description.setValue(thisCollection.getMetadata("provenance_description"));
-	    provenance_description.setSize(6, 40);
-	    	    
-	    // the row to upload a new logo 
+	    // metadataList.addLabel(T_label_provenance_description);
+	    // TextArea provenance_description = metadataList.addItem().addTextArea("provenance_description");
+	    // provenance_description.setValue(thisCollection.getMetadata("provenance_description"));
+	    // provenance_description.setSize(6, 40);
+
+        // DATASHARE end
+
+	    // the row to upload a new logo
 	    metadataList.addLabel(T_label_logo);
 	    metadataList.addItem().addFile("logo");
 

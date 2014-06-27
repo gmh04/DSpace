@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -27,6 +28,7 @@ import org.dspace.app.xmlui.cocoon.AbstractDSpaceTransformer;
 import org.dspace.app.xmlui.utils.DSpaceValidity;
 import org.dspace.app.xmlui.utils.HandleUtil;
 import org.dspace.app.xmlui.utils.UIException;
+import org.dspace.app.util.Util;
 import org.dspace.app.xmlui.wing.Message;
 import org.dspace.app.xmlui.wing.WingException;
 import org.dspace.app.xmlui.wing.element.Body;
@@ -278,6 +280,24 @@ public class ItemViewer extends AbstractDSpaceTransformer implements CacheablePr
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+
+        // DataShare - start
+        if(Util.showDownloadAll(context, item))
+        {
+	        final String CLS = "download-all";
+	        Division div = division.addDivision("download-all-top", CLS);
+	
+	        final String HREF = contextPath + "/download/" +
+	            dso.getHandle() + "/" + dso.getName().replaceAll(" ", "_") + ".zip";
+	        final String ICON = "go-down.png";
+	        final String HINT = "Download zip file containing all files in the item";
+	        
+	        Para para = div.addPara();
+	        para.addFigure(ICON, HREF, "");
+	        para.addXref(HREF, message("item.view.download-all"), null, HINT);
+	        para.addFigure(ICON, HREF, "");
+        }
+        // DataShare - end
 
         Para showfullPara = division.addPara(null, "item-view-toggle item-view-toggle-top");
 

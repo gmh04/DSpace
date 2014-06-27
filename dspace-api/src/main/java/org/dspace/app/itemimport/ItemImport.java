@@ -7,6 +7,8 @@
  */
 package org.dspace.app.itemimport;
 
+// merge with /home/datashar/datashare/src/main/java/org/edina/datashare/app/itemimport/ItemImport.java
+
 import gr.ekt.bte.core.DataLoader;
 import gr.ekt.bte.core.TransformationEngine;
 import gr.ekt.bte.core.TransformationResult;
@@ -1620,7 +1622,6 @@ public class ItemImport
         	// find the bundle
 	        Bundle[] bundles = i.getBundles(newBundleName);
 	        Bundle targetBundle = null;
-
 	        if( bundles.length < 1 )
 	        {
 	            // not found, create a new one
@@ -1631,20 +1632,16 @@ public class ItemImport
 	            // put bitstreams into first bundle
 	            targetBundle = bundles[0];
 	        }
-
 	        // now add the bitstream
 	        bs = targetBundle.registerBitstream(assetstore, bitstreamPath);
-
 	        // set the name to just the filename
 	        int iLastSlash = bitstreamPath.lastIndexOf('/');
 	        bs.setName(bitstreamPath.substring(iLastSlash + 1));
-
 	        // Identify the format
 	        // FIXME - guessing format guesses license.txt incorrectly as a text file format!
 	        BitstreamFormat bf = FormatIdentifier.guessFormat(c, bs);
 	        bs.setFormat(bf);
 	        bs.setDescription(description);
-
 	        bs.update();
         }
     }

@@ -552,9 +552,14 @@ public abstract class AbstractMETSIngester extends AbstractPackageIngester
         // -- Step 6 --
         // Finish things up!
 
+        // DATASHARE - start
+        // won't work unless authorisation is switched off
+        context.turnOffAuthorisationSystem();
         // Update the object to make sure all changes are committed
         PackageUtils.updateDSpaceObject(dso);
-
+        context.restoreAuthSystemState();
+        // DATASHARE - end
+        
         return dso;
     }
 
@@ -700,7 +705,6 @@ public abstract class AbstractMETSIngester extends AbstractPackageIngester
 
         // Update the object to make sure all changes are committed
         PackageUtils.updateDSpaceObject(dso);
-
         return dso;
     }
 

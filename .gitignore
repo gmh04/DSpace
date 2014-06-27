@@ -29,3 +29,6 @@ META-INF/
 
 ##Mac noise
 .DS_Store
+
+dspace-xmlui/src/main/resources/aspects/DataShare
+dspace-xmlui/src/main/webapp/themes/DataShare

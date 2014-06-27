@@ -354,7 +354,8 @@ public class ReportGenerator
         viewedItems.add(items);
         
         report.addBlock(viewedItems);
-        
+   
+        /* DATASHARE start - disable full report
         // prepare a report of the full action statistics
         Statistics fullInfo = prepareStats(actionAggregator, true, true);
         fullInfo.setSectionHeader("All Actions Performed");
@@ -362,6 +363,7 @@ public class ReportGenerator
         fullInfo.setResultName("Number of times");
         
         report.addBlock(fullInfo);
+        DATASHARE end */
         
         // prepare the user login statistics package
         if (!userEmail.equals("off"))

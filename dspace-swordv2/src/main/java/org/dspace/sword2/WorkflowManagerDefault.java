@@ -17,6 +17,7 @@ import org.swordapp.server.Deposit;
 import org.swordapp.server.SwordError;
 import org.swordapp.server.UriRegistry;
 
+
 import java.sql.SQLException;
 
 /**
@@ -140,7 +141,6 @@ public class WorkflowManagerDefault implements WorkflowManager
         {
             throw new SwordError(UriRegistry.ERROR_METHOD_NOT_ALLOWED, "DSpace does not support file replace; you should DELETE the original file and PUT the new one");
         }
-
         // this is equivalent to asking whether the media resource in the item can be deleted
 		try
 		{

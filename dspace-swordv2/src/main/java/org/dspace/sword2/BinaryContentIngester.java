@@ -7,6 +7,7 @@
  */
 package org.dspace.sword2;
 
+
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Bitstream;
 import org.dspace.content.BitstreamFormat;
@@ -25,9 +26,30 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 public class BinaryContentIngester extends AbstractSwordContentIngester
 {
+	// DATASHARE - start
+	public DepositResult ingest(Context context, Deposit deposit, DSpaceObject dso, VerboseDescription verboseDescription)
+			throws DSpaceSwordException, SwordError, SwordAuthException, SwordServerException
+	{
+		return this.ingest(context, deposit, dso, verboseDescription, null);
+	}
+
+	public DepositResult ingest(Context context, Deposit deposit, DSpaceObject dso, VerboseDescription verboseDescription, DepositResult result)
+			throws DSpaceSwordException, SwordError, SwordAuthException, SwordServerException
+	{
+		if (dso instanceof Collection)
+		{
+			return this.ingestToCollection(context, deposit, (Collection) dso, verboseDescription, result);
+		}
+		else if (dso instanceof Item)
+		{
+			return this.ingestToItem(context, deposit, (Item) dso, verboseDescription, result);
+		}
+		return null;
+	}
+	// DATASHARE - end
+
 	public DepositResult ingestToCollection(Context context, Deposit deposit, Collection collection, VerboseDescription verboseDescription, DepositResult result)
 			throws DSpaceSwordException, SwordError, SwordAuthException, SwordServerException
 	{
@@ -149,7 +171,6 @@ public class BinaryContentIngester extends AbstractSwordContentIngester
 			result.setItem(item);
 			result.setTreatment(this.getTreatment());
             result.setOriginalDeposit(bs);
-
 			return result;
 		}
 		catch (AuthorizeException e)

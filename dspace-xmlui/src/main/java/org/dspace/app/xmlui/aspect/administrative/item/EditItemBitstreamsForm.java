@@ -128,8 +128,9 @@ public class EditItemBitstreamsForm extends AbstractDSpaceTransformer {
         boolean showBitstreamUpdateOrderButton = false;
 		for (Bundle bundle : bundles)
 		{
-
-			Cell bundleCell = files.addRow("bundle_head_" + bundle.getID(), Row.ROLE_DATA, "").addCell(1, 5);
+			// DATASHARE - start
+			Cell bundleCell = files.addRow("bundle_head_" + bundle.getID(), Row.ROLE_DATA, "").addCell(1, 7);
+			// DATASHARE - end
 			bundleCell.addContent(T_bundle_label.parameterize(bundle.getName()));
 
 			Bitstream[] bitstreams = bundle.getBitstreams();
@@ -205,14 +206,19 @@ public class EditItemBitstreamsForm extends AbstractDSpaceTransformer {
                     if((bitstreamIndex == 0)){
                         upButton.setDisabled();
                     }
+                    
                     upButton.setValue(T_order_up);
-                    upButton.setHelp(T_order_up);
+
+					// DATASHARE - start
+                    // problem with button label
+                    //upButton.setHelp(T_order_up);
                     Button downButton = cell.addButton("submit_order_" + bundle.getID() + "_" + bitstream.getID() + "_down", (bitstreamIndex == (bitstreams.length - 1) ? "disabled" : "") + " icon-button arrowDown ");
                     if(bitstreamIndex == (bitstreams.length - 1)){
                         downButton.setDisabled();
                     }
                     downButton.setValue(T_order_down);
-                    downButton.setHelp(T_order_down);
+                    //downButton.setHelp(T_order_down);
+					// DATASHARE - end
 
                     //These values will only be used IF javascript is disabled or isn't working
                     cell.addHidden(bundle.getID() + "_" + bitstream.getID() + "_up_value").setValue(retrieveOrderUpButtonValue((java.util.List<Integer>) bitstreamIdOrder.clone(), bitstreamIndex));
@@ -225,7 +231,9 @@ public class EditItemBitstreamsForm extends AbstractDSpaceTransformer {
 
 		if (AuthorizeManager.authorizeActionBoolean(context, item, Constants.ADD))
 		{
-			Cell cell = files.addRow().addCell(1, 5);
+			// DATASHARE - start
+			Cell cell = files.addRow().addCell(1, 7);
+			// DATASHARE - end
 			cell.addXref(contextPath+"/admin/item?administrative-continue="+knot.getId()+"&submit_add",T_submit_add);
 		}
 		else

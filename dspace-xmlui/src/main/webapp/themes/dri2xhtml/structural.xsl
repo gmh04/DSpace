@@ -11,6 +11,7 @@
 <!--
     TODO: Describe this XSL file
     Author: Alexey Maslov
+
     
 -->
 
@@ -26,10 +27,13 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:confman="org.dspace.core.ConfigurationManager"
         exclude-result-prefixes="mets xlink xsl dim xhtml mods dc confman">
+
     
     <xsl:output indent="yes"/>
+
     
     <!-- Global variables -->
+
     
     <!--
         Context path provides easy access to the context-path parameter. This is
@@ -37,6 +41,7 @@
         context-path paramater.
     -->
     <xsl:variable name="context-path" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
+
     
     <!--
         Theme path represents the full path back to theme. This is useful for
@@ -47,7 +52,6 @@
         "[context-path]/themes/[theme-dir]/".
     -->
     <xsl:variable name="theme-path" select="concat($context-path,'/themes/',/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='theme'][@qualifier='path'])"/>
-
     <!--
         Full URI of the current page. Composed of scheme, server name and port and request URI.
     -->
@@ -66,6 +70,7 @@
         Specifically, adding a static page will need to override the DRI, to directly add content.
     -->
     <xsl:variable name="request-uri" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='URI']"/>
+
     
     <!--
     This stylesheet will be written in several stages:
@@ -73,8 +78,10 @@
         2. Finish implementing the XHTML output within the templates
         3. Figure out the special case stuff as well as the small details
         4. Clean up the code
+
     
     Currently in stage 3...
+
         
     Last modified on: 3/15/2006
     -->
@@ -89,6 +96,7 @@
     <!--
         The starting point of any XSL processing is matching the root element. In DRI the root element is document,
         which contains a version attribute and three top level elements: body, options, meta (in that order).
+
         
         This template creates the html document, giving it a head and body. A title and the CSS style reference
         are placed in the html head, while the body is further split into several divs. The top-level div
@@ -97,6 +105,7 @@
             "ds-body"    - the div containing all the content of the page; built from the contents of dri:body
             "ds-options" - the div with all the navigation and actions; built from the contents of dri:options
             "ds-footer"  - optional footer div, containing misc information
+
         
         The order in which the top level divisions appear may have some impact on the design of CSS and the
         final appearance of the DSpace page. While the layout of the DRI schema does favor the above div
@@ -161,7 +170,15 @@
                 </xsl:if>
               </xsl:attribute>
             </meta>
-            <!-- Add stylesheets -->
+
+            <!-- DataShare start -->
+            <meta>
+              <xsl:attribute name="name">description</xsl:attribute>
+              <xsl:attribute name="content">Edinburgh DataShare is a digital repository of multi-disciplinary research datasets produced at the University of Edinburgh, hosted by the Data Library.</xsl:attribute>
+            </meta>
+            <!-- DataShare end -->
+
+            <!-- Add stylsheets -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='stylesheet']">
                 <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="media">
@@ -189,7 +206,19 @@
                     </xsl:attribute>
                 </link>
             </xsl:for-each>
-            
+
+            <!-- DATASHARE start -->
+            <link>
+              <xsl:attribute name="rel">
+                <xsl:text>shortcut icon</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="href">
+                <xsl:value-of select="$theme-path"/>
+                <xsl:text>/images/favicon.ico</xsl:text>
+              </xsl:attribute>
+            </link>
+            <!-- DATASHARE end -->
+
             <!--  Add OpenSearch auto-discovery link -->
             <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='opensearch'][@qualifier='shortName']">
                 <link rel="search" type="application/opensearchdescription+xml">
@@ -297,11 +326,16 @@
                         <xsl:text>About This Repository</xsl:text>
                     </xsl:when>
                     <xsl:when test="not($page_title) or (string-length($page_title) &lt; 1)">
-                                <i18n:text>xmlui.dri2xhtml.METS-1.0.no-title</i18n:text>
-                        </xsl:when>
-                        <xsl:otherwise>
-                                <xsl:copy-of select="$page_title/node()" />
-                        </xsl:otherwise>
+                      <i18n:text>xmlui.dri2xhtml.METS-1.0.no-title</i18n:text>
+                    </xsl:when>
+                    <!-- DATASHARE start -->
+                    <xsl:when test="$page_title='xmlui.general.dspace_home'">
+                      <xsl:copy-of select="$page_title" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:copy-of select="$page_title/node()" /><xsl:text> - </xsl:text><i18n:text>xmlui.general.dspace_home</i18n:text>
+                    </xsl:otherwise>
+                    <!-- DATASHARE end -->
                 </xsl:choose>
             </title>
 
@@ -551,12 +585,12 @@
         </li>
     </xsl:template>
 
-
     
     
 <!--
         The meta, body, options elements; the three top-level elements in the schema
 -->
+
     
     
     
@@ -639,7 +673,17 @@
     -->
     <!-- TODO: figure out why i18n tags break the go button -->
     <xsl:template match="dri:options">
+
         <div id="ds-options">
+
+          <!-- DATASHARE start -->
+          <div id="datashare-logo">
+            <a href="/">
+              <img alt="Edinburgh DataShare logo" src="/themes/DataShare/images/datashare_edinburgh.gif"/>
+            </a>
+          </div>
+          <!-- DATASHARE end -->
+
             <h3 id="ds-search-option-head" class="ds-option-set-head"><i18n:text>xmlui.dri2xhtml.structural.search</i18n:text></h3>
             <div id="ds-search-option" class="ds-option-set">
                 <!-- The form, complete with a text box and a button, all built from attributes referenced
@@ -742,6 +786,7 @@
     <xsl:template match="dri:objectMeta" />
     <xsl:template match="dri:repositoryMeta" />
     -->
+
     
     
       
@@ -755,6 +800,7 @@
         lists, tables and divs. They are also used in making forms and referencing metadata from the object
         store through the use of reference elements. The lists used by options also have templates here.
 -->
+
     
     
     
@@ -1395,6 +1441,14 @@
                         </xsl:choose>
                     <xsl:apply-templates select="dri:field/dri:label" mode="formComposite"/>
                     <xsl:text>:</xsl:text>
+
+                    <!-- DATASHARE start -->
+                    <xsl:choose>
+                      <xsl:when test="./dri:field/@required = 'yes'">
+                        <span class="important-text"><xsl:text>*</xsl:text></span>
+                      </xsl:when>
+                    </xsl:choose>
+                    <!-- DATASHARE end -->
                 </label>
             </xsl:when>
             <xsl:when test="string-length(string(preceding-sibling::*[1][local-name()='label'])) > 0">
@@ -1613,7 +1667,6 @@
             <xsl:apply-templates select="."/>
         </li>
     </xsl:template>
-
 
     
     <!-- From here on out come the templates for supporting elements that are contained within structural

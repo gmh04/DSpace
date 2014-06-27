@@ -25,9 +25,13 @@
     xmlns:jstring="java.lang.String"
     xmlns:rights="http://cosimo.stanford.edu/sdr/metsrights/"
     exclude-result-prefixes="i18n dri mets xlink xsl jstring rights">
+
     
     <xsl:output indent="yes"/>
     
+
+
+
 
     
     
@@ -45,6 +49,9 @@
             </div>
         </xsl:if>
     </xsl:template>
+
+
+
     
     
     
@@ -52,6 +59,7 @@
     <xsl:template match="mets:fileGrp[@USE='CONTENT']">
         <xsl:param name="context"/>
         <xsl:param name="primaryBitstream" select="-1"/>
+
         
         <h2><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text></h2>
         <table class="ds-table file-list">
@@ -83,6 +91,8 @@
     </xsl:template>   
     
     
+
+
     <!-- Build a single row in the bitstreams table of the item view page -->
     <xsl:template match="mets:file">
         <xsl:param name="context" select="."/>
@@ -123,6 +133,7 @@
                      </xsl:if>
                 </a>
             </td>
+
             <!-- File size always comes in bytes and thus needs conversion --> 
             <td>
                 <xsl:choose>
@@ -158,6 +169,9 @@
               </xsl:call-template>
             </td>
             <td>
+                <!-- DATASHARE code start -->
+                <xsl:attribute name="class">download-cell</xsl:attribute>
+                <!-- DATASHARE code end -->
                 <xsl:choose>
                     <xsl:when test="$context/mets:fileSec/mets:fileGrp[@USE='THUMBNAIL']/
                         mets:file[@GROUPID=current()/@GROUPID]">
@@ -173,17 +187,29 @@
                             </img>
                         </a>
                     </xsl:when>
+                    <!-- DATASHARE code start -->
                     <xsl:otherwise>
-                        <xsl:choose>
-                            <xsl:when test="@ADMID">
-                                <xsl:call-template name="display-rights"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:call-template name="view-open"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                      <a>
+                        <xsl:attribute name="href">
+                          <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                        </xsl:attribute>
+                        <img alt="Download">
+                          <xsl:attribute name="src">
+                            <xsl:text>/themes/DataShare/images/download_button.gif</xsl:text>
+                          </xsl:attribute>
+                        </img>
+                      </a>
                     </xsl:otherwise>
-                </xsl:choose>                        
+                    <!--<xsl:otherwise>
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                            </xsl:attribute>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-viewOpen</i18n:text>
+                        </a>
+                    </xsl:otherwise>-->
+                    <!-- DATASHARE code end -->
+                </xsl:choose>
             </td>
 	    <!-- Display the contents of 'Description' as long as at least one bitstream contains a description -->
 	    <xsl:if test="$context/mets:fileSec/mets:fileGrp[@USE='CONTENT']/mets:file/mets:FLocat/@xlink:label != ''">
@@ -194,6 +220,7 @@
 
         </tr>
     </xsl:template>
+
     
     <xsl:template name="view-open">
         <a>
@@ -247,6 +274,7 @@
     This maps format MIME Types to human friendly File Type descriptions.
     Essentially, it looks for a corresponding 'key' in your messages.xml of this
     format: xmlui.dri2xhtml.mimetype.{MIME Type}
+
     
     (e.g.) <message key="xmlui.dri2xhtml.mimetype.application/pdf">PDF</message>
 
@@ -278,6 +306,9 @@
             </ul>
         </div>
     </xsl:template>
+
+
+
     
     
     
@@ -290,6 +321,8 @@
             </img>
         </div>
     </xsl:template>
+
+
     
     
 </xsl:stylesheet>

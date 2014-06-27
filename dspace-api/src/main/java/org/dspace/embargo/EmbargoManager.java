@@ -152,6 +152,9 @@ public class EmbargoManager
                             + result.toString());
         }
 
+        // datashare - dc.date.available is populated when
+        // item is created so ignore embragos in the past
+		// gh - can delete this comment?
         // sanity check: do not allow an embargo lift date in the past.
         if (liftDate.before(new Date()))
         {
@@ -159,6 +162,7 @@ public class EmbargoManager
                     "Embargo lift date must be in the future, but this is in the past: "
                             + result.toString());
         }
+
         return result;
     }
 
@@ -269,6 +273,7 @@ public class EmbargoManager
             context = new Context();
             context.setIgnoreAuthorization(true);
             Date now = new Date();
+
              
             // scan items under embargo
             if (line.hasOption('i'))

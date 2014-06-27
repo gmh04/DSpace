@@ -33,6 +33,7 @@ import java.util.Properties;
 
 public class SimpleDCEntryIngester extends AbstractSimpleDC implements SwordEntryIngester
 {
+
 	public SimpleDCEntryIngester()
     {
         this.loadMetadataMaps();
@@ -148,7 +149,6 @@ public class SimpleDCEntryIngester extends AbstractSimpleDC implements SwordEntr
         // if we get to here, go on and add the metadata
         item.addMetadata(dcv.schema, dcv.element, dcv.qualifier, dcv.language, dcv.value);
     }
-
 	private void addMetadataToItem(Deposit deposit, Item item)
 			throws DSpaceSwordException
 	{
@@ -186,6 +186,19 @@ public class SimpleDCEntryIngester extends AbstractSimpleDC implements SwordEntr
 				// ignore anything we don't understand
 				continue;
 			}
+
+			// DATASHARE - start (remove?)
+			// clear any pre-existing metadata
+			/*DCValue dcv = this.makeDCValue(dsTerm, null);
+			if (dcv.qualifier == null)
+			{
+				item.clearMetadata(dcv.schema, dcv.element, null, Item.ANY);
+			}
+			else
+			{
+				item.clearMetadata(dcv.schema, dcv.element, dcv.qualifier, Item.ANY);
+			}*/
+			// DATASHARE - end
 
 			// now add all the metadata terms
             DCValue dcv = this.makeDCValue(dsTerm, null);
@@ -261,6 +274,8 @@ public class SimpleDCEntryIngester extends AbstractSimpleDC implements SwordEntr
 			throw new DSpaceSwordException(e);
 		}
     }
+
+
 
     public DCValue makeDCValue(String field, String value)
             throws DSpaceSwordException

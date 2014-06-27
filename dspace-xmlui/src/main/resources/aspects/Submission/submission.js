@@ -248,6 +248,18 @@ function submissionControl(collectionHandle, workspaceID, initStepAndPage)
 {
 	//load initial submission information
 	var submissionInfo = getSubmissionInfo(workspaceID);
+	
+	// DATASHARE - start
+    if(!collectionHandle.equals(submissionInfo.getCollectionHandle())){
+        // Handle selected does not match the handle of the submission (this can
+        // happen if user has used the back button to change collection). Create
+        // a new workspace item. 
+        var dso = HandleManager.resolveToObject(getDSContext(), collectionHandle);
+        var workspace = WorkspaceItem.create(getDSContext(), dso, true);
+        workspaceID = "S"+workspace.getID();
+        submissionInfo = getSubmissionInfo(workspaceID);
+	}
+	// DATASHARE - end
 
 	//Initialize a Cocoon Local Page to save current state information
 	//(This lets us handle when users click the browser "back button"

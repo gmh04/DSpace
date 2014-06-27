@@ -50,6 +50,7 @@ public class CollectionViewer extends AbstractDSpaceTransformer implements Cache
     public static final Message T_untitled = 
     	message("xmlui.general.untitled");
     
+
     /** Cached validity object */
     private SourceValidity validity;
     
@@ -204,6 +205,7 @@ public class CollectionViewer extends AbstractDSpaceTransformer implements Cache
         {
             home.addDivision("collection-search-browse",
                     "secondary search-browse");
+
         }
 
         // Add the reference
