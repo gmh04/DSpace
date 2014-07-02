@@ -21,7 +21,7 @@
         <root.basedir>${basedir}/..</root.basedir>
     </properties>
 
-    <version>4.1.0.0</version>
+    <version>4.1.0.0-SNAPSHOT</version>
 
     <!--
        Runtime and Compile Time dependencies for DSpace.
@@ -448,7 +448,12 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.2.1</version>
+            <version>4.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>
@@ -462,6 +467,10 @@
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpmime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -510,12 +519,12 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
-		
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-		
+
 		<dependency>
 	    	<groupId>backport-util-concurrent</groupId>
 	    	<artifactId>backport-util-concurrent</artifactId>

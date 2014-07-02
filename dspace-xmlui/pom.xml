@@ -20,7 +20,7 @@
         <root.basedir>${basedir}/..</root.basedir>
     </properties>
 
-    <version>4.1.0.0</version>
+    <version>4.1.0.0-SNAPSHOT</version>
 
     <build>
         <filters>
