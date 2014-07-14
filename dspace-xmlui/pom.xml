@@ -52,7 +52,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Datashare allows datashare compile -->
+            <!-- Datashare - allows datashare compile -->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-jar-plugin</artifactId>
