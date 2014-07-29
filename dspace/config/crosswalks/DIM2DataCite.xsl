@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- DATASHARE merge -->
+
 <!--
     Document   : DIM2DataCite.xsl
     Created on : January 23, 2013, 1:26 PM

@@ -66,6 +66,12 @@ public class DOIConsumer implements Consumer
         }
         Item item = (Item) dso;
         
+        // DATASHARE - ignore unarchived items
+        if(!item.isArchived()){
+        	return;
+        }
+        // DATASHARE - end 
+        
         DOIIdentifierProvider provider = new DSpace().getSingletonService(
                 DOIIdentifierProvider.class);
         
