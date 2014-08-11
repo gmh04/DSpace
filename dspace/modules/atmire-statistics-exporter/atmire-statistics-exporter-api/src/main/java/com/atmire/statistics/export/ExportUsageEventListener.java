@@ -190,7 +190,7 @@ public class ExportUsageEventListener extends AbstractUsageEventListener {
         String mimeType = bitstream.getFormat().getMIMEType();
 
         if(referer == null){
-        	referer = "undefined";
+        	referer = "";
         }        
         
         //Start adding our data
@@ -269,9 +269,9 @@ public class ExportUsageEventListener extends AbstractUsageEventListener {
 
     }
 
-    private static void processUrl(Context c, String urlStr) throws IOException, SQLException {
-        log.debug("Prepared to send url to tracker URL: " + urlStr);
-        System.out.println(urlStr);
+    public static void processUrl(Context c, String urlStr) throws IOException, SQLException {
+        log.info("Prepared to send url to tracker URL: " + urlStr);
+        
         URLConnection conn;
 
         try {
