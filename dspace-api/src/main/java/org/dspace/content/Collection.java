@@ -1023,6 +1023,18 @@ public class Collection extends DSpaceObject
                 item.getID());
 
         DatabaseManager.setConstraintDeferred(ourContext, "coll2item_item_fk");
+        
+        // DATASHARE - start
+        // https://redmine.edina.ac.uk/issues/11107
+        // inexplicable problem with deferred constraint, workaround is to
+        // remove collection2item entry before item delete.
+        // Remove in later release if not a problem,
+        DatabaseManager.updateQuery(ourContext,
+                "DELETE FROM collection2item WHERE collection_id= ? "+
+                "AND item_id= ? ",
+                getID(), item.getID());
+        // DATASHARE - end
+        
         if (row.getLongColumn("num") == 1)
         {
             // Orphan; delete it
@@ -1031,10 +1043,6 @@ public class Collection extends DSpaceObject
         log.info(LogManager.getHeader(ourContext, "remove_item",
                 "collection_id=" + getID() + ",item_id=" + item.getID()));
 
-        DatabaseManager.updateQuery(ourContext,
-                "DELETE FROM collection2item WHERE collection_id= ? "+
-                "AND item_id= ? ",
-                getID(), item.getID());
         DatabaseManager.setConstraintImmediate(ourContext, "coll2item_item_fk");
 
         ourContext.addEvent(new Event(Event.REMOVE, Constants.COLLECTION, getID(), Constants.ITEM, item.getID(), item.getHandle()));

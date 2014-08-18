@@ -27,6 +27,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer.RemoteSolrException;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.dspace.authorize.AuthorizeException;
@@ -42,6 +43,7 @@ import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.storage.rdbms.DatabaseManager;
+import org.dspace.storage.rdbms.TableRow;
 import org.dspace.storage.rdbms.TableRowIterator;
 import org.dspace.xoai.data.DSpaceDatabaseItem;
 import org.dspace.xoai.exceptions.CompilingException;
@@ -226,8 +228,19 @@ public class XOAI
             {
                 try
                 {
-                    server.add(this.index(Item.find(_context, iterator.next()
-                            .getIntColumn("item_id"))));
+                    // DATASHARE - start
+                    // print out item id when exception raised 
+                    TableRow tr = iterator.next();
+                    Item item = Item.find(_context, tr.getIntColumn("item_id"));
+                    try{
+                        server.add(this.index(item));    
+                    }
+                    catch (RemoteSolrException ex)
+                    {
+                        log.info("Problem indexing " + item.getID());
+                        throw new RuntimeException(ex);
+                    }
+                    // DATASHARE - end
                     
                     _context.clearCache();
                 }
