@@ -196,7 +196,7 @@ public class DOIOrganiser {
             try { 
                 if (!it.hasNext()) 
                 {
-                    System.err.println("There are no objects in the database "
+                    System.out.println("There are no objects in the database "
                             + "that could be reserved.");
                 }
                 
@@ -223,7 +223,7 @@ public class DOIOrganiser {
             try {
                 if (!it.hasNext()) 
                 {
-                    System.err.println("There are no objects in the database "
+                    System.out.println("There are no objects in the database "
                             + "that could be registered.");
                 }
                 while (it.hasNext())
@@ -251,7 +251,7 @@ public class DOIOrganiser {
             try { 
                 if (!it.hasNext()) 
                 {
-                    System.err.println("There are no objects in the database "
+                    System.out.println("There are no objects in the database "
                             + "whose metadata needs an update.");
                 }
                 
@@ -278,7 +278,7 @@ public class DOIOrganiser {
             try { 
                 if (!it.hasNext()) 
                 {
-                    System.err.println("There are no objects in the database "
+                    System.out.println("There are no objects in the database "
                             + "that could be deleted.");
                 }
                 
