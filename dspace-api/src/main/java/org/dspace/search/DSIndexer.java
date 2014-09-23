@@ -674,6 +674,13 @@ public class DSIndexer
     static IndexingTask prepareIndexingTask(Context context, DSpaceObject dso, boolean force) throws SQLException, IOException, DCInputsReaderException
     {
         String handle = HandleManager.findHandle(context, dso);
+        
+        // DATASHARE - start
+        if(handle == null){
+            log.error("No handle found for :" + dso.getID());
+        }
+        // DATASHARE - start
+        
         Term term = new Term("handle", handle);
         IndexingTask action = null;
         switch (dso.getType())
