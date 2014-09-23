@@ -438,7 +438,7 @@ public class SolrServiceImpl implements SearchService, IndexingService {
 
         Context context = new Context();
         context.turnOffAuthorisationSystem();
-
+        
         try
         {
             if(getSolr() == null)
@@ -465,9 +465,11 @@ public class SolrServiceImpl implements SearchService, IndexingService {
                 // DATASHARE - start 
                 // Problem deleting items left around indexes without dspace items.
                 // The following helps with the clean up
-                /*if(handle == null){
+                if(handle == null){
                     getSolr().deleteByQuery("search.resourceid:\"" + doc.getFieldValue("search.resourceid") + "\"");
-                }*/
+                    return;
+                }
+                // DATASHARE - end
                 
                 DSpaceObject o = HandleManager.resolveToObject(context, handle);
 
