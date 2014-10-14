@@ -137,6 +137,25 @@ public class DSpaceOAIDataProvider extends HttpServlet
 
             log.debug("Handling OAI request");
             XOAICacheManager.handle(identification, dataProvider, parameters, out);
+
+            /*
+             * DATASHARE - debugging for OAI
+            try{
+                ItemRepository _itemRepo = new ItemRepository(repository);
+                Item item = new Item(_itemRepo.getItem(parameters.getIdentifier()));
+                ByteArrayOutputStream schemaOUT = new ByteArrayOutputStream();
+                MarshallingUtils.marshalWithoutXMLHeader(Metadata.class
+                        .getPackage().getName(), item.getItem().getMetadata().getMetadata(),
+                        new PrefixMapper(), schemaOUT);
+                byte[] array = schemaOUT.toByteArray();
+                FileOutputStream fos = new FileOutputStream("/home/datashar/tmp/item.txt");
+                fos.write(array);
+                fos.close();
+            }
+            catch(Exception ex){
+                log.info(ex);
+            }
+            */
             
             out.flush();
             out.close();
