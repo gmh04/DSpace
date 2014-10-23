@@ -233,7 +233,14 @@ public class DOIOrganiser {
                             context, 
                             doiRow.getIntColumn("resource_type_id"), 
                             doiRow.getIntColumn("resource_id"));
-                    organiser.register(doiRow, dso);
+                    
+                    // DATASHARE - prevent nullpointer exception
+                    if(dso != null){
+                        organiser.register(doiRow, dso);
+                    }
+                    else{
+                        System.err.println("No such item: " + doiRow.getIntColumn("resource_id"));
+                    }
                 }
             } catch (SQLException ex) {
                 System.err.println("Error in database connection:" + ex.getMessage());
@@ -753,7 +760,7 @@ public class DOIOrganiser {
              
             if (!quiet) 
             {
-                System.err.println("It was possible to delete this identifier: "
+                System.out.println("It was possible to delete this identifier: "
                         + DOI.SCHEME + doiRow.getStringColumn("doi")
                         + " online.");
             }
