@@ -172,19 +172,7 @@ public class ExportUsageEventListener extends AbstractUsageEventListener {
 
     private void processItem(Context context, Item item, Bitstream bitstream, HttpServletRequest request) throws IOException, SQLException {
         //We have a valid url collect the rest of the data
-        String clientIP = request.getRemoteAddr();
-        if (ConfigurationManager.getBooleanProperty("useProxies", false) && request.getHeader("X-Forwarded-For") != null) {
-            /* This header is a comma delimited list */
-            for (String xfip : request.getHeader("X-Forwarded-For").split(",")) {
-                /* proxy itself will sometime populate this header with the same value in
-                    remote address. ordering in spec is vague, we'll just take the last
-                    not equal to the proxy
-                */
-                if (!request.getHeader("X-Forwarded-For").contains(clientIP)) {
-                    clientIP = xfip.trim();
-                }
-            }
-        }
+        String clientIP = Util.getIPAddress(request);        
         String clientUA = request.getHeader("USER-AGENT");
         String referer = request.getHeader("referer");
         String mimeType = bitstream.getFormat().getMIMEType();
