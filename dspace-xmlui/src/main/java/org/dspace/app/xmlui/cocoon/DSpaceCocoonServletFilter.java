@@ -226,10 +226,10 @@ public class DSpaceCocoonServletFilter implements Filter
 			FilterChain arg2) throws IOException, ServletException { 
     
 	        // DATASHARE - start
-	        if(response.isCommitted()){
+	        /*if(response.isCommitted()){
 	            // EASE filter can redirect and thus commit the response
 	            return;
-	        }
+	        }*/
 	        // DATASHARE - start
 	        
             HttpServletRequest realRequest = (HttpServletRequest)request;
