@@ -35,7 +35,7 @@
              as it is used to reference the LICENSE_HEADER and *.properties file(s) in that directory. -->
         <root.basedir>${basedir}</root.basedir>
 
-        <datashare.version>4.1.0.0-SNAPSHOT</datashare.version>
+        <datashare.version>4.1.0.0</datashare.version>
     </properties>
 
     <build>
