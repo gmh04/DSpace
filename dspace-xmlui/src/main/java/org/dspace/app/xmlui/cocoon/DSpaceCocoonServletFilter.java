@@ -224,18 +224,22 @@ public class DSpaceCocoonServletFilter implements Filter
      */
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain arg2) throws IOException, ServletException { 
-    
-	        // DATASHARE - start
-	        /*if(response.isCommitted()){
-	            // EASE filter can redirect and thus commit the response
-	            return;
-	        }*/
-	        // DATASHARE - start
-	        
+    	        
             HttpServletRequest realRequest = (HttpServletRequest)request;
             HttpServletResponse realResponse = (HttpServletResponse) response;
 
             try {
+                // DATASHARE - start
+                if(response.isCommitted()){
+                    // EASE filter can redirect and thus commit the response
+                    ContextUtil.abortContext(realRequest);
+                    
+                    // note finally and ContextUtil.completeContext(realRequest) will still be called
+                    return; 
+                }
+                // DATASHARE - start
+
+                
 	    	// Check if there is a request to be resumed.
 	        realRequest = AuthenticationUtil.resumeRequest(realRequest);
 	
