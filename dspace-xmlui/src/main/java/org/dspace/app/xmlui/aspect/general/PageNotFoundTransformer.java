@@ -61,7 +61,7 @@ public class PageNotFoundTransformer extends AbstractDSpaceTransformer implement
     private SAXEvent bodyEvent;
     
     /** Have we determined that the body is empty, and hence a we should generate a page not found. */
-    private boolean bodyEmpty;
+    protected boolean bodyEmpty;
     
     /**
      * Generate the unique caching key.
