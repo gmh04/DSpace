@@ -269,6 +269,13 @@ public class DOIOrganiser {
                             context, 
                             doiRow.getIntColumn("resource_type_id"), 
                             doiRow.getIntColumn("resource_id"));
+                    
+                    // DATASHARE - start
+					if(dso == null){
+                        System.out.println("Cant find item with resource id: " +
+                                           Integer.toString(doiRow.getIntColumn("resource_id")));
+					}
+                    // DATASHARE - end
                     organiser.update(doiRow, dso);
                 }
             } catch (SQLException ex) {
