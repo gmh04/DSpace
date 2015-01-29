@@ -84,8 +84,11 @@ public class Navigation extends AbstractDSpaceTransformer implements CacheablePr
         /* Create skeleton menu structure to ensure consistent order between aspects,
          * even if they are never used
          */
-        options.addList("browse");
+        // DATASHARE - start
+        // put account box first
         options.addList("account");
+        options.addList("browse");
+        // DATASHARE - end        
         options.addList("context");
         options.addList("administrative");
     }
