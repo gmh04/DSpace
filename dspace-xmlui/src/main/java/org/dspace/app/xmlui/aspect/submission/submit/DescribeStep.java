@@ -180,6 +180,12 @@ public class DescribeStep extends AbstractSubmissionStep
 
                 Division div = body.addInteractiveDivision("submit-describe",actionURL,Division.METHOD_POST,"primary submission");
                 div.setHead(T_submission_head);
+                
+                // DATASHARE - start
+                Division info = div.addDivision("info-describe");
+                info.addPara(message("datashare.submit.describe.info"));
+                // DATASHARE - end
+                
                 addSubmissionProgressList(div);
 
                 List form = div.addList("submit-describe",List.TYPE_FORM);
