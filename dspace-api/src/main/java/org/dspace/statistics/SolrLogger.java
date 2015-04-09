@@ -9,6 +9,7 @@ package org.dspace.statistics;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
@@ -37,6 +38,7 @@ import org.apache.solr.common.params.CommonParams;
 import org.apache.solr.common.params.FacetParams;
 import org.apache.solr.common.params.MapSolrParams;
 import org.apache.solr.common.params.ShardParams;
+import org.dspace.app.util.Util;
 import org.dspace.content.*;
 import org.dspace.content.Collection;
 import org.dspace.core.ConfigurationManager;
@@ -50,6 +52,7 @@ import org.dspace.statistics.util.SpiderDetector;
 import org.dspace.usage.UsageWorkflowEvent;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -295,21 +298,24 @@ public class SolrLogger
         // Save our basic info that we already have
 
         if(request != null){
-            String ip = request.getRemoteAddr();
+        	// DATASHARE - start
+        	String ip = Util.getIPAddress(request);
+            /*String ip = request.getRemoteAddr();
 
             if (isUseProxies() && request.getHeader("X-Forwarded-For") != null) {
-                /* This header is a comma delimited list */
+                // This header is a comma delimited list 
                 for (String xfip : request.getHeader("X-Forwarded-For").split(",")) {
-                    /* proxy itself will sometime populate this header with the same value in
-                    remote address. ordering in spec is vague, we'll just take the last
-                    not equal to the proxy
-                    */
+                    // proxy itself will sometime populate this header with the same value in
+                    //remote address. ordering in spec is vague, we'll just take the last
+                    // not equal to the proxy
+                    
                     if (!request.getHeader("X-Forwarded-For").contains(ip)) {
                         ip = xfip.trim();
                     }
                 }
-            }
-
+            }*/
+        	// DATASHARE - end
+        	
             doc1.addField("ip", ip);
 
             //Also store the referrer

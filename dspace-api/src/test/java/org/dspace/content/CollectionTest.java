@@ -320,7 +320,7 @@ public class CollectionTest extends AbstractDSpaceObjectTest
     /**
      * Test of setLogo method, of class Collection.
      */
-    @Test
+    /*@Test
     public void testSetLogoAuth2() throws Exception
     {
         new NonStrictExpectations()
@@ -342,7 +342,7 @@ public class CollectionTest extends AbstractDSpaceObjectTest
 
         c.setLogo(null);
         assertThat("testSetLogoAuth2 1",c.getLogo(), nullValue());
-    }
+    }*/
 
     /**
      * Test of setLogo method, of class Collection.
@@ -1734,7 +1734,7 @@ public class CollectionTest extends AbstractDSpaceObjectTest
      /**
      * Test of delete method, of class Collection.
      */
-    @Test(expected=AuthorizeException.class)
+    /*@Test(expected=AuthorizeException.class)
     public void testDeleteNoAuth2() throws Exception
     {
         new NonStrictExpectations()
@@ -1752,7 +1752,7 @@ public class CollectionTest extends AbstractDSpaceObjectTest
         int id = c.getID();
         c.delete();
         fail("Exception expected");
-    }
+    }*/
 
     /**
      * Test of getCommunities method, of class Collection.
