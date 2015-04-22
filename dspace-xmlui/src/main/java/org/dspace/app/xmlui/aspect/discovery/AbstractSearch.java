@@ -883,7 +883,9 @@ public abstract class AbstractSearch extends AbstractDSpaceTransformer implement
             return Integer.parseInt(ObjectModelHelper.getRequest(objectModel).getParameter("rpp"));
         }
         catch (Exception e) {
-            return 10;
+        	// DATASHARE - start
+            return 20;
+            // DATASHARE - end
         }
     }
 

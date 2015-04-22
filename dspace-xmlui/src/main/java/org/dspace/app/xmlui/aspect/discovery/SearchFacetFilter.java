@@ -72,8 +72,9 @@ public class SearchFacetFilter extends AbstractDSpaceTransformer implements Cach
      */
     protected DiscoverQuery queryArgs;
 
-    private int DEFAULT_PAGE_SIZE = 10;
-
+    // DATASHARE - start
+    private int DEFAULT_PAGE_SIZE = 20;
+    // DATASHARE - end
 
     private SearchService searchService = null;
     private static final Message T_go = message("xmlui.general.go");
